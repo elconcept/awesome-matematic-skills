@@ -23,7 +23,7 @@ attribution:
     compliance; treść napisana od zera na tekście dyrektywy (UE) 2022/2555.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.1
   companion_skills: rodo-naruszenie-72h-pl, matematic-konstytucja-ai, sejm-eli-mcp, mcp-eu-compliance
   parity: nis2-compliance-triage-en
 ---
@@ -68,11 +68,16 @@ Zegar RODO prowadzi `rodo-naruszenie-72h-pl`. Jedno zgłoszenie nie zastępuje d
 ### Krok 0 - stan transpozycji PL (OBOWIĄZKOWY, przed jakąkolwiek poradą)
 
 Termin transpozycji NIS2 minął 17 października 2024 r. (art. 41 dyrektywy). Transpozycją polską
-jest **nowelizacja ustawy z 5 lipca 2018 r. o krajowym systemie cyberbezpieczeństwa (KSC)** -
-status: **[DO SPRAWDZENIA w ISAP przez konektor sejm-eli-mcp na dzień użycia]**.
+jest **ustawa z dnia 23 stycznia 2026 r. o zmianie ustawy o krajowym systemie
+cyberbezpieczeństwa oraz niektórych innych ustaw (Dz.U. 2026 poz. 252)**, nowelizująca ustawę
+z 5 lipca 2018 r. o KSC. Weszła w życie po upływie miesiąca od dnia ogłoszenia (jej art. 49),
+według ISAP 3 kwietnia 2026 r.;
+w ISAP ma status „obowiązuje” (sprawdzone 2026-10-19). Na poziomie UE dyrektywy 2022/2555 nie
+zmienił do 2026-10-19 żaden przyjęty akt; projekt Komisji COM(2026) 13 z 20 stycznia 2026 r.
+(„simplification measures”) był wtedy projektem.
 
-1. Sprawdź w ISAP (sejm-eli-mcp) aktualny tekst ustawy o KSC i status nowelizacji wdrażającej
-   NIS2: uchwalona? opublikowana w Dzienniku Ustaw? jaka vacatio legis?
+1. Sprawdź w ISAP (sejm-eli-mcp) aktualny tekst jednolity ustawy o KSC i ewentualne późniejsze
+   zmiany - nowelizacja z 2026 r. obowiązuje, ale tekst mógł się od tego czasu zmienić.
 2. Zapisz wynik w karcie (pole "Stan transpozycji") z datą sprawdzenia.
 3. Dobierz reżim analizy: (a) nowelizacja obowiązuje -> analizuj na tekście ustawy; (b) nie
    obowiązuje -> analizuj na dyrektywie jako mapie NADCHODZĄCYCH obowiązków, a równolegle oznacz,
@@ -128,8 +133,12 @@ m.in. gdy:
 kwalifikowani dostawcy usług zaufania, rejestry TLD i dostawcy usług DNS; dostawcy publicznych
 sieci łączności co najmniej średni; podmioty krytyczne według CER; podmioty wskazane przez
 państwo członkowskie jako kluczowe. **Ważne**: pozostałe podmioty w zakresie (średnie z
-załącznika I oraz średnie i duże z załącznika II). Ostateczny podział w Polsce określa ustawa KSC
-po nowelizacji - klasyfikację krajową oznacz [DO SPRAWDZENIA] do czasu potwierdzenia w Kroku 0.
+załącznika I oraz średnie i duże z załącznika II). W Polsce podział określa art. 5 ustawy o KSC
+w brzmieniu nadanym ustawą z 23 stycznia 2026 r.: podmiot kluczowy to m.in. podmiot z załącznika
+nr 1 do ustawy, który przewyższa progi średniego przedsiębiorcy (art. 2 ust. 1 zał. I do
+rozporządzenia 651/2014); podmiot ważny to m.in. średni przedsiębiorca z załącznika nr 1 oraz
+średni lub większy z załącznika nr 2, o ile nie jest podmiotem kluczowym. Pełny katalog (także
+podmioty kluczowe niezależnie od wielkości) czytaj w art. 5 ust. 1 i 2 ustawy na dzień użycia.
 Konsekwencja podziału: inny nadzór (ex ante vs ex post) i inne pułapy kar (Krok 7).
 
 ### Krok 4 - mapa 10 środków zarządzania ryzykiem (art. 21 ust. 2)
@@ -170,8 +179,12 @@ Zegar (biegnie od powzięcia wiedzy o incydencie istotnym):
   raport z postępów, a raport końcowy w miesiąc od zakończenia obsługi incydentu.
 - W stosownych przypadkach - powiadomienie odbiorców usług, których incydent może dotyczyć.
 
-Adresata zgłoszeń w Polsce (właściwy CSIRT / organ) określa ustawa KSC po nowelizacji -
-[DO SPRAWDZENIA w Kroku 0]. Przy incydencie ŻYWYM: skill układa zegar i draft, ale odsyła do
+W Polsce (art. 11 ust. 1 pkt 4-4c ustawy o KSC w brzmieniu z 2026 r.) podmiot kluczowy lub ważny
+zgłasza **do właściwego CSIRT sektorowego**: wczesne ostrzeżenie o incydencie poważnym w ciągu
+24 godzin od wykrycia, zgłoszenie incydentu poważnego w ciągu 72 godzin od wykrycia, sprawozdanie
+okresowe na wniosek CSIRT i sprawozdanie końcowe w ciągu miesiąca od zgłoszenia; wszystko przez
+system teleinformatyczny z art. 46 ust. 1 (art. 11 ust. 2). Za podmiot publiczny zgłasza jednostka
+wyznaczona (art. 16h). Przy incydencie ŻYWYM: skill układa zegar i draft, ale odsyła do
 procedury reagowania i człowieka. Dane osobowe w incydencie -> równolegle `rodo-naruszenie-72h-pl`.
 
 ### Krok 6 - organ zarządzający (art. 20)
@@ -179,9 +192,17 @@ procedury reagowania i człowieka. Dane osobowe w incydencie -> równolegle `rod
 Zarząd (organ zarządzający) podmiotu kluczowego i ważnego: **zatwierdza** środki zarządzania
 ryzykiem z art. 21, **nadzoruje** ich wdrażanie i **może ponosić odpowiedzialność** za naruszenia
 tego artykułu przez podmiot. Członkowie organu mają obowiązek **odbywać szkolenia** z
-cyberbezpieczeństwa i powinni oferować analogiczne szkolenia pracownikom. Zakres odpowiedzialności
-osobistej w Polsce (kara pieniężna dla kierownika, inne sankcje) - [DO SPRAWDZENIA w ustawie KSC
-po nowelizacji].
+cyberbezpieczeństwa i powinni oferować analogiczne szkolenia pracownikom. W Polsce (ustawa o KSC
+w brzmieniu z 2026 r.):
+- **art. 8c** - kierownik podmiotu odpowiada za wykonywanie obowiązków z zakresu
+  cyberbezpieczeństwa; przy organie wieloosobowym bez wskazanej osoby odpowiadają wszyscy jego
+  członkowie; powierzenie obowiązków innej osobie nie zwalnia z odpowiedzialności;
+- **art. 8d** - kierownik decyduje o systemie zarządzania bezpieczeństwem informacji, planuje
+  środki finansowe, przydziela i nadzoruje zadania, dba o świadomość personelu i zgodność z prawem;
+- **art. 8e** - kierownik i osoba, której powierzono jego obowiązki, przechodzą szkolenie raz
+  w roku kalendarzowym; udział musi być udokumentowany;
+- **art. 73a** - kara pieniężna dla kierownika: do 300% wynagrodzenia (liczonego jak ekwiwalent
+  za urlop), w podmiocie publicznym do 100% (ust. 4 i 5).
 
 ### Krok 7 - kary (art. 34)
 
@@ -190,9 +211,20 @@ Pułapy z dyrektywy (maksima, które państwo musi co najmniej przewidzieć):
   obrotu przedsiębiorstwa - kwota wyższa,
 - podmioty **ważne**: co najmniej do **7 000 000 EUR lub 1,4%** obrotu - kwota wyższa.
 
-Konkretne widełki złotówkowe, kary dla kierowników i środki nadzorcze (w tym możliwość
-tymczasowego zakazu pełnienia funkcji zarządczych w podmiocie kluczowym - [DO SPRAWDZENIA numer
-artykułu i kształt w transpozycji]) określa ustawa KSC po nowelizacji - [DO SPRAWDZENIA].
+W Polsce (ustawa o KSC w brzmieniu z 2026 r.):
+- **podmiot kluczowy** (art. 73 ust. 3): do 10 000 000 EUR albo 2% przychodów z działalności
+  gospodarczej w poprzednim roku obrotowym - kwota wyższa; nie mniej niż 20 000 zł;
+- **podmiot ważny** (art. 73 ust. 4): do 7 000 000 EUR albo 1,4% przychodów; nie mniej niż
+  15 000 zł (przepis, inaczej niż ust. 3, nie mówi wprost o „kwocie wyższej” - czytaj brzmienie);
+- naruszenie powodujące bezpośrednie i poważne cyberzagrożenie dla obronności, bezpieczeństwa
+  państwa, porządku publicznego albo życia i zdrowia ludzi lub groźbę poważnej szkody - kara do
+  100 000 000 zł (art. 73 ust. 5);
+- kary dla kierownika - art. 73a (Krok 6);
+- **zakaz pełnienia funkcji zarządczych** przez kierownika podmiotu kluczowego do czasu usunięcia
+  uchybień - gdy podmiot nie zastosował się do nakazu lub decyzji organu (art. 53 ust. 9 pkt 6);
+  organ nie może w ten sposób uniemożliwić funkcjonowania podmiotu w zakresie potrzebnym do
+  usunięcia naruszeń.
+Kwoty w euro przelicza się po średnim kursie NBP z 31 grudnia roku poprzedzającego decyzję.
 
 ## Format wyniku - karta NIS2 (szablon dosłowny)
 
@@ -218,7 +250,7 @@ ZEGAR RAPORTOWANIA (art. 23) - [tryb: symulacja / incydent żywy]:
 - wczesne ostrzeżenie (24h):  [deadline]
 - zgłoszenie incydentu (72h): [deadline]
 - raport końcowy (1 miesiąc): [deadline]
-- adresat: [CSIRT/organ wg transpozycji - DO SPRAWDZENIA jeśli nieustalone]
+- adresat: [właściwy CSIRT sektorowy (art. 11 ust. 1 pkt 4-4c KSC); podmiot publiczny - jednostka wyznaczona (art. 16h)]
 - dane osobowe w incydencie: [TAK -> równolegle rodo-naruszenie-72h-pl / NIE]
 
 ZARZĄD (art. 20): [zatwierdzenie środków: status | nadzór: status | szkolenia: status]

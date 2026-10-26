@@ -5,6 +5,100 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.19f] - 2026-10-19
+
+### Added
+
+- `scripts/wachta-zmian-aktow.mjs` + `seuranta/akty-zrodlowe.json`, trzeci krok workflow
+  `wachta-legislacyjna.yml`: wachta NOWYCH aktow zmieniajacych akty zrodlowe skilli - akty UE
+  w Cellar (SPARQL Urzedu Publikacji), ustawy PL w ISAP („Akty zmieniajace" po baseline). Nowa
+  zmiana = blad z lista skilli cytujacych akt. Geneza: rozporzadzenie (UE) 2026/1744 przesunelo
+  terminy AI Act w lipcu 2026, a skille AI Act przez trzy miesiace podawaly stare - dotychczasowe
+  wachty pilnowaly tylko istnienia ustaw PL. Na start 7 aktow (AI Act, NIS2, RODO, DORA, CER,
+  ustawa o KSC, ustawa o systemach SI); kontrola na czerwono: stan sprzed lipca wykrywa 32026R1744
+  i nowelizacje KSC z 2026 r.; pusty rejestr = blad. Zmiany ustawy o KSC, ktore wejda w zycie
+  28.10.2026 i 11.01.2027, przejrzane z wyprzedzeniem (bez wplywu na skill) - `znane_zmiany`.
+
+### Changed
+
+- `nis2-ksc-pl` 1.1.1: nowelizacja ustawy o KSC weszla w zycie 3 kwietnia 2026 r. (ISAP).
+
+## [2026.10.19e] - 2026-10-19
+
+### Changed
+
+- `nis2-ksc-pl` 1.1.0 (`ochrona-danych`): znaczniki „[DO SPRAWDZENIA]” o polskiej ustawie zastapione
+  przepisami ustawy o KSC w brzmieniu z nowelizacji z 23 stycznia 2026 r. (Dz.U. 2026 poz. 252),
+  przeczytanymi w jej tekscie: podzial na podmioty kluczowe i wazne (art. 5), zgloszenia do
+  wlasciwego CSIRT sektorowego 24 h / 72 h / miesiac przez system z art. 46 (art. 11, za podmiot
+  publiczny jednostka wyznaczona - art. 16h), odpowiedzialnosc, obowiazki i coroczne szkolenie
+  kierownika (art. 8c-8e), kary dla podmiotu (art. 73 ust. 3-5: 10 mln EUR / 2%, 7 mln EUR / 1,4%,
+  do 100 mln zl) i kierownika (art. 73a: do 300% wynagrodzenia, w podmiocie publicznym 100%) oraz
+  zakaz pelnienia funkcji zarzadczych w podmiocie kluczowym (art. 53 ust. 9 pkt 6). Rejestr
+  `reviews/legal-accuracy.md` 15/15.
+
+## [2026.10.19d] - 2026-10-19
+
+### Changed
+
+- `nis2-ksc-pl` 1.0.1 (`ochrona-danych`): Krok 0 podaje sprawdzony stan transpozycji - ustawa
+  z dnia 23 stycznia 2026 r. o zmianie ustawy o KSC oraz niektorych innych ustaw (Dz.U. 2026
+  poz. 252), wg ISAP obowiazuje, wchodzi w zycie po uplywie miesiaca od ogloszenia (jej art. 49) -
+  zamiast „[DO SPRAWDZENIA]"; dyrektywa 2022/2555 bez przyjetego aktu zmieniajacego do 2026-10-19
+  (projekt KE COM(2026) 13 w toku). Regula sprawdzenia tekstu jednolitego na dzien uzycia zostaje.
+
+## [2026.10.19c] - 2026-10-19
+
+### Fixed
+
+- `ai-act-triage-pl` 1.2.0 (`governance-kancelarii`): aktualizacja do rozporzadzenia (UE) 2026/1744
+  z 8 lipca 2026 r. („Digital Omnibus on AI"), ktore zmienilo AI Act. Skill i skrypt
+  `tracker_obowiazkow.py` podawaly obowiazki wysokiego ryzyka z zal. III od 2.8.2026, a z zal. I do
+  2.8.2027; art. 113 w nowym brzmieniu przesuwa je na 2.12.2027 i 2.8.2028. Skrypt przypisywal tez
+  art. 50 ust. 1 i 4 do 2.8.2025 (blad z forka) - art. 50 stosuje sie od 2.8.2026. Do skilla weszly
+  ponadto: nowe zakazy z art. 5 ust. 1 lit. ba i bb (od 2.12.2026), nowe brzmienie art. 4, wezszy
+  „safety component" (art. 3 pkt 14, art. 6 ust. 1a-1c), przeniesienie maszyn do zal. I sekcja B
+  z rezimem art. 2 ust. 2, przepisy przejsciowe (art. 111 ust. 2 i 4) i odwolanie FRIA do DPIA
+  (art. 27 ust. 4). Kazda jednostka sprawdzona w akcie zmieniajacym i tekscie skonsolidowanym
+  (`reviews/legal-accuracy.md`).
+- `ai-act-triage-pl`, `references/rodo_ai_act_styk.md`: polska ustawa nie jest juz projektem -
+  ustawa z dnia 3 lipca 2026 r. o systemach sztucznej inteligencji (Dz.U. 2026 poz. 1003)
+  obowiazuje; Przewodniczacy KRiBSI powolany (M.P. 2026 poz. 945 i 946).
+
+### Added
+
+- `ai-act-triage-pl`: pola aktualnosci (`last_verified`, `freshness_window: 6 months`,
+  `freshness_category: regulatory`, `verified_against`); w `scripts/` licencja MIT forka
+  alirezarezvani/claude-skills (MIT wymaga dolaczenia noty i tekstu licencji, a jej nie bylo).
+
+## [2026.10.19b] - 2026-10-19
+
+### Fixed
+
+- `eu-sparql-search` 1.1.0 (`orzecznictwo-zrodla`): 10 z 24 kodow typu dokumentu w
+  `references/resource-types.md` nie istnialo w tabeli autorytetow Urzedu Publikacji UE, w tym
+  `ORDER_CJEU` i `CASELAW`, ktore SKILL.md podawal jako „najczestsze". Zapytanie z nieistniejacym
+  kodem zwraca pusty wynik, nie blad, wiec model mogl uznac, ze takich dokumentow nie ma. Kazdy
+  kod sprawdzony na zywym endpoincie SPARQL (2026-10-19); bledne zastapione (`ORDER`, `OPIN_AG`,
+  `DEC_FRAMW`, `PROP_REG` ...) albo usuniete; plik podaje zapytanie do sprawdzenia kodu spoza listy.
+
+### Added
+
+- `eu-sparql-search`: pola aktualnosci (`last_verified`, `freshness_window`,
+  `freshness_category`, `verified_against`) i wersja; opis zaczyna sie od tego, kiedy uzyc skilla,
+  i mowi, do czego nie sluzy (jak w hubie EN).
+
+## [2026.10.19] - 2026-10-19
+
+### Changed
+
+- `marko-pl-content` 1.3.0 (`jakosc-tresci`): opis zaczyna sie od tego, kiedy go uzyc (typowe
+  prosby: „sprawdz moj post", „czy to nadaje sie do publikacji"), mowi, co zwraca, i czego nie
+  robi (przeglad kodu, sama korekta, tlumaczenie). Dotad opieral sie na wolaczu „marko?",
+  ktorego nowy uzytkownik nie zna - wpis w katalogu Claude mial instalacje bez uzyc. Kolejnosc
+  zrodel tekstu: najpierw tekst wklejony, potem wskazany plik, dopiero potem `git diff HEAD` -
+  wczesniej wklejony tekst przegrywal z niezwiazanymi zmianami w repozytorium.
+
 ## [2026.10.13e] - 2026-10-13
 
 ### Added
