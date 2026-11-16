@@ -1,5 +1,24 @@
 # Changelog - redline-docx-pl
 
+## bez zmiany wersji - 2026-11-13
+
+- **Smoke test po adeu 3.2.2**: trojstan OK / UWAGI / BLOKADA (kod 0/10/20). Trzy nowe
+  kontrole jako UWAGI: numery list w extract, `-o` bez `--page` oddaje caly dokument,
+  komunikat na stderr przy czesciowym wyniku. Warunek wstepny i kontrola uzywaja jawnie
+  `--page 1`, wiec dzialaja na kazdej wersji. 3.2.2: 30/30; 1.30.0: UWAGI 3. Pin bez zmian.
+
+## bez zmiany wersji - 2026-11-10
+
+- **Naprawa: `extract` z `--page all`.** Bez tej flagi `extract -o` zapisuje tylko
+  syntetyczna strone 1 i konczy sie kodem 0 (1.30.0: 39 z 600 paragrafow), wiec na
+  dlugich umowach krok 1 oddawal poczatek dokumentu. Zgloszenie: zespol Adeu.
+- **`scripts/smoke_adeu.py`** zastepuje reczny smoke test: dluga syntetyczna umowa,
+  zmiana w ostatnim paragrafie, extract / apply / extract / sanitize, trojstan i kod
+  wyjscia. Kontrola pozytywna `--bez-page-all` daje BLOKADE.
+- **Scenariusz formatowania w smoke tescie**: tabela, numeracja automatyczna, sledzone
+  zmiany drugiej strony, tekst rozbity pogrubieniem. Kontrola `--kontrola-formatu`.
+  Nowe ograniczenie w SKILL.md: `extract` oddaje kazdy punkt listy jako `1.`.
+
 ## bez zmiany wersji - 2026-09-16
 
 Parytet z kopia robocza (wprowadzone tam 2026-08-27).
