@@ -1,0 +1,102 @@
+name: Fixture baseline — upstream before overlay
+
+# Uruchamia ISTNIEJACE testy z forka awesome-matematic-skills-pl.
+# Nie tworzy nowych fixture, nie odpytuje LLM, MCP ani zewnetrznych API prawnych.
+# Brak osobnego, dostepnego w repo runnera benchmark-fixtures — NIE jest tu symulowany.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python-contracts:
+    name: Python — oryginalne testy i fixtures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Zainstaluj pytest
+        run: python -m pip install pytest
+      - name: Inwentaryzacja testow — fail closed
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          roots = [
+              "dokumenty/skills/akta-przeszukiwalne-pl/tests",
+              "dokumenty/skills/chronologia-stanowiska-pl/tests",
+              "dokumenty/skills/doc-intel-contract-pl/tests",
+              "governance-kancelarii/skills/kyc-kancelaria-pl/tests",
+              "jakosc-tresci/skills/humanizer-pl/tests",
+              "jakosc-tresci/skills/marko-pl-content/tests",
+          ]
+          discovered = {str(p) for p in Path(".").rglob("test_*.py") if ".git" not in p.parts}
+          # Ten plik jest szablonem pod INNE repo (import app.mcp_server),
+          # a nie uruchamialnym testem tego huba.
+          excluded = {"dev-mcp/skills/matematic-mcp-fastmcp-instructions-pl/examples/test_instructions_drift.py"}
+          included = {p for p in discovered if any(p.startswith(root + "/") for root in roots)}
+          unknown = discovered - included - excluded
+          for root in roots:
+              count = len([p for p in included if p.startswith(root + "/")])
+              print(f"{root}: {count} test_*.py")
+              assert count > 0, f"PUSTY ZESTAW TESTOW: {root}"
+          print(f"Python test files: included={len(included)}, explicitly_excluded={len(discovered & excluded)}, unknown={sorted(unknown)}")
+          assert not unknown, "NOWY TEST POZA CI — najpierw zaktualizuj pipeline"
+          assert len(included) >= 22, "Mniej plikow testowych niz w zinwentaryzowanym upstream"
+          fixtures = list(Path(".").rglob("tests/fixtures/*"))
+          real_fixtures = [p for p in fixtures if p.is_file()]
+          print(f"Fixture files in tests/fixtures: {len(real_fixtures)}")
+          assert len(real_fixtures) >= 20, "Zniknely fixtures upstream"
+          PY
+      - name: Python pytest (offline)
+        run: |
+          python -m pytest -q -k "not smoke" \
+            dokumenty/skills/akta-przeszukiwalne-pl/tests \
+            dokumenty/skills/chronologia-stanowiska-pl/tests \
+            dokumenty/skills/doc-intel-contract-pl/tests \
+            governance-kancelarii/skills/kyc-kancelaria-pl/tests \
+            jakosc-tresci/skills/humanizer-pl/tests \
+            jakosc-tresci/skills/marko-pl-content/tests
+
+  node-contracts:
+    name: Node.js — grounding i testy silnika
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Grounding — oryginalny test harness (zero deps)
+        run: node fundament-weryfikacyjny/skills/citation-grounding-pl/scripts/test-grounding.mjs
+      - name: Let-it-be — oryginalna suita kontraktowa (test tylko, bez anonimizacji akt)
+        working-directory: dokumenty/skills/let-it-be
+        run: npm test
+      - name: Marketplace — istniejąca bramka
+        run: node scripts/check-marketplace.mjs
+
+  docx-engine:
+    name: DOCX OOXML — istniejące fixtures i Vitest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dokumenty/skills/redline-docx-pl/vendor/docx-engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: dokumenty/skills/redline-docx-pl/vendor/docx-engine/package-lock.json
+      - name: Zależności przypięte lockfile
+        run: npm ci --no-audit --no-fund
+      - name: TypeScript typecheck
+        run: npm run typecheck
+      - name: Vitest z oryginalnymi testami OOXML
+        run: npm test -- --reporter=verbose
